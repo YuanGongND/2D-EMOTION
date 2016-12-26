@@ -1,4 +1,7 @@
+% Initialize result matrix
 result=zeros(1,8);
+
+
 index=csvread('../../../data/IEMOCAP/feature/version1/indexMM.csv');
 
 c=[0.001,0.01,0.1,1,10];

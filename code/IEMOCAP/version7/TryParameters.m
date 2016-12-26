@@ -1,23 +1,16 @@
-result=zeros(1,8);
-index=csvread('../../../data/IEMOCAP/feature/version1/indexMM.csv');
+% Initialize result matrix
+resultMatrix = zeros(1,8);
 
-c=[0.001,0.01,0.1,1,10];
-e=[0.001,0.01,0.1,1];
+% Train/Test on same speaker
+sameSpeakerIndex = csvread('../../../data/IEMOCAP/feature/version1/indexMM.csv');
 
-m=size(c,2);
-n=size(e,2);
+% Set range of SVM parameters
+cRange = [0.001,0.01,0.1,1,10];
+eRange = [0.001,0.01,0.1,1];
 
-activationresultsqer=zeros(m,n);
-activationresultcoef=zeros(m,n);
-
-valenceresultsqer=zeros(m,n);
-valenceresultcoef=zeros(m,n);
-
-for i=2
-   for j=2
-       
-       for featurenum=20
-           
+% Get result of all parameter sets
+for c = cRange
+   for e = eRange
        actipara=['-s 3 -t 2 -c ',num2str(c(i)),' -e ',num2str(e(j))];
        valepara=['-s 3 -t 2 -c ',num2str(c(i)),' -e ',num2str(e(j))];
        
