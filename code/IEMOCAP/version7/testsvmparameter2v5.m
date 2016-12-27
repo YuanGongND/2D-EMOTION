@@ -21,7 +21,7 @@ for i=2
        actipara=['-s 3 -t 2 -c ',num2str(c(i)),' -e ',num2str(e(j))];
        valepara=['-s 3 -t 2 -c ',num2str(c(i)),' -e ',num2str(e(j))];
        
-       [sqeracti,sqervale,sqerdis,coefActi,coefVale,wholeResult]=testsvmparameter1v5(actipara,valepara,'','',featurenum,index);
+       [sqeracti,sqervale,sqerdis,coefActi,coefVale,wholeResult]=CompareSvmRt(actipara,valepara,'','',featurenum,index);
        
 %        result=[result;[i,j,featurenum,sqeracti,sqervale,sqerdis,coefActi,coefVale]];
 %        

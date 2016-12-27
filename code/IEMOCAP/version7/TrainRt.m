@@ -1,10 +1,9 @@
-function [ model ] = TestSvm( inputRawData,...  all samples and features
-                              model,... svm model
-                              testIndex,...  only use part of raw data 
-                              featureIndex...   only use part of features
+function [ model ] = TrainRt( inputRawData,...  all samples and features
+                              trainingIndex,...  only use part of raw data 
+                              featureIndex,...   only use part of features
+                              rtParameters...
                             )
 
-                        %    actiRtResult = TestRt( activationData, actiRtModel, testingIndex, ACTIVATIONFEATUREINDEX );
 %% Read raw data 
 rawData = inputRawData;
 
@@ -17,3 +16,8 @@ rawfeatures = rawData( :, featureIndex );
 featuresNormalized = zscore( rawfeatures ); %normalization  %featuresNormalized=mapminmax(allFeatureSet')';
 % only use selected samples
 features = featuresNormalized( trainingIndex, : )
+
+%% train svm model
+model = fitrtree(TrainingSet,LabelSet);
+         
+end

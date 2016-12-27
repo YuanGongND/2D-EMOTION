@@ -1,4 +1,8 @@
-function [model] =libsvmtrain(TrainingSet,LabelSet,Setting)
+function [ model ]...
+     = libsvmtrain(TrainingSet,... pure feaures, without label
+                   LabelSet,... labels
+                   Setting)
+               
 %wrap the libsvm to keep consistency with matlab svm
 
     LibTraining=TrainingSet;

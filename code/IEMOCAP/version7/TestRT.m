@@ -1,5 +1,5 @@
-function [ model ] = TestSvm( inputRawData,...  all samples and features
-                              model,... svm model
+function [ result ] = TestRt( inputRawData,...  all samples and features
+                              model,... regression tree model
                               testIndex,...  only use part of raw data 
                               featureIndex...   only use part of features
                             )
@@ -9,11 +9,16 @@ function [ model ] = TestSvm( inputRawData,...  all samples and features
 rawData = inputRawData;
 
 %% seperate labels from raw data
-labels = rawData( trainingIndex, 1);
+labels = rawData( testIndex, 1);
 
 %% seperate and preprocess features from raw data
 rawfeatures = rawData( :, featureIndex );
 % Normalize features using zscore
 featuresNormalized = zscore( rawfeatures ); %normalization  %featuresNormalized=mapminmax(allFeatureSet')';
 % only use selected samples
-features = featuresNormalized( trainingIndex, : )
+features = featuresNormalized( testIndex, : )
+
+%% get result
+prediction = predict( model, features );
+% the first column of return is prediction, the second column is truth
+result = [ prediction, labels ];
