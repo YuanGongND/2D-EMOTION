@@ -18,6 +18,6 @@ featuresNormalized = zscore( rawfeatures ); %normalization  %featuresNormalized=
 features = featuresNormalized( trainingIndex, : )
 
 %% train svm model
-model = fitrtree(TrainingSet,LabelSet);
+model = fitrtree( features, labels );
          
 end
