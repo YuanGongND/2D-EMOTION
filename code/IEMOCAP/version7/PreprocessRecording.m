@@ -4,14 +4,14 @@ function [  ] = PreprocessRecording( recordingName, setting )
 % features. 
 
 %% Default setting 
-if nargin == 0
-    recordingName = 'Ses01F_impro01.wav';
+if nargin < 2
+    % default setting 
     DefaultSetting;
 end
 
-if nargin == 1
-    % default setting 
-    DefaultSetting;
+if nargin < 1
+    % default testfile
+    recordingName = 'Ses01F_impro01.wav';
 end
 
 %% Read Audio
