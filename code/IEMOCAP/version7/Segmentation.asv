@@ -1,0 +1,14 @@
+function [ timeStampSegment ] = Segmentation ( timeStampUtterance, setting )
+% cut utterance into smaller units, it is the actually unit to be processed
+
+% time stamp is a 4 - tuple [ start, end, utterance, result]
+timeStampSegment = [];
+segmentLength = setting.segmentLength;
+
+for i = 1 : size( timeStampUtterance )
+    utteranceLength = timeStampUtterance( i : 2 ) - timeStampUtterance( i : 1 );
+    segmentNum = floor( 
+    
+end
+
+end 

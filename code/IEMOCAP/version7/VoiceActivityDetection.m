@@ -18,6 +18,7 @@ plot( recording );
 for i = 1: size( timeStamp, 1 )
     r = rectangle( 'Position', [ timeStamp( i, 1) setting.plothight (timeStamp( i, 2)- timeStamp( i, 1)) 0.01 ] );
     r.FaceColor = 'r';
+    audiowrite( ['./tempfile/' num2str( i ), '.wav' ], recording( timeStamp( i, 1 ) : timeStamp( i, 2 ) ), sampleRate ); 
     hold on;
 end
     
