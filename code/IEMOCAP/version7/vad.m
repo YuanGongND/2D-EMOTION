@@ -1,20 +1,20 @@
-function [x1,x2] = vad( recording )
+function [x1,x2] = vad( recording ,setting )
 
 % Normalization to [-1,1]
 recording = double( recording );
 recording = recording / max( abs( recording ) );
 
 % Constant
-FrameLen = 256;
-FrameInc = 128;
+FrameLen = setting.frameLen;  %% 1280/16000=0.08s
+FrameInc = FrameLen / 2;
 
 amp1 = 10;
 amp2 = 2;
 zcr1 = 10;
 zcr2 = 5;
 
-maxsilence = 50;  % 50*10ms  = 500ms
-minlen  = 80;    % 80*10ms = 800ms
+maxsilence = setting.maxsilence;  % 10*0.08 = 0.8s 
+minlen  = setting.minlength;    % 25*0.08ms = 2s
 status  = 0;
 count   = 0;
 silence = 0;
@@ -31,7 +31,7 @@ amp = sum(abs(enframe(filter([1 -0.9375], 1, recording ), FrameLen, FrameInc)), 
 
 % Adjust energy threshold
 amp1 = min( amp1, max( amp ) / 4 );
-amp2 = min( amp2, max( amp )/8 );
+amp2 = min( amp2, max( amp ) / 8 );
 
 % Start voice activity detection
 x1 = 0; 
@@ -75,25 +75,7 @@ for n=1 : length( zcr )
 end   
 
 count = count-silence/2;
-x2 = x1 + count -1;
+x2 = x1 + count +1;
 
-subplot(311)
-plot( recording )
-axis([1 length( recording ) -1 1])
-ylabel('Speech');
-line([x1*FrameInc x1*FrameInc], [-1 1], 'Color', 'red');
-line([x2*FrameInc x2*FrameInc], [-1 1], 'Color', 'red');
-
-subplot(312)
-plot(amp);
-axis([1 length(amp) 0 max(amp)])
-ylabel('Energy');
-line([x1 x1], [min(amp),max(amp)], 'Color', 'red');
-line([x2 x2], [min(amp),max(amp)], 'Color', 'red');
-
-subplot(313)
-plot(zcr);
-axis([1 length(zcr) 0 max(zcr)])
-ylabel('ZCR');
-line([x1 x1], [min(zcr),max(zcr)], 'Color', 'red');
-line([x2 x2], [min(zcr),max(zcr)], 'Color', 'red');
+x1 = x1 * FrameInc;
+x2 = x2 * FrameInc;
