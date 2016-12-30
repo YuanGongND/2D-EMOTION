@@ -3,17 +3,30 @@ function [  ] = PreprocessRecording( recordingName, setting )
 % silence), segmentation (cut into processing unit), extract acoustic
 % features. 
 
+%% Default setting 
+if nargin == 0
+    recordingName = 'Ses01F_impro01.wav';
+    DefaultSetting;
+end
+
+if nargin == 1
+    % default setting 
+    DefaultSetting;
+end
+
 %% Read audio
-[ recording, sampleRate ] = audioread( filename );
+[ recording, sampleRate ] = audioread( recordingName );
 
 %% Voice activity detection
-timeStampVad = VoiceActivityDetection( recording, sampleRate, setting );
+timeStampUtterance = VoiceActivityDetection( recording, sampleRate, setting );
+csvwrite( 'timeStampUtterance.csv', timeStampUtterance );
 
 %% Segmentation
-timeStampSeg = Segmentation( timeStampVad, setting );
+timeStampSeg = Segmentation( timeStampUtterance, setting );
+csvwrite( 'timeStampSeg.csv', timeStampSeg );
 
 %% Feature extraction
-FeatureExtraction( recording, timeStampSeg );
+%FeatureExtraction( recording, timeStampSeg );
 
 end
 
