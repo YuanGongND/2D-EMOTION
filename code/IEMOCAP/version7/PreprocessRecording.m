@@ -14,7 +14,7 @@ if nargin == 1
     DefaultSetting;
 end
 
-%% Read audio
+%% Read Audio
 [ recording, sampleRate ] = audioread( recordingName );
 
 %% Voice activity detection
