@@ -1,4 +1,5 @@
-[ recording, Fs ] = audioread ( 'Ses01F_impro01.wav' );
+
+[ recording, Fs ] = audioread ( '../Ses01F_impro01.wav' );
 
 setting.maxsilence = 10;
 setting.minlength = 20;
