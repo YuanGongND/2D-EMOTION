@@ -1,0 +1,10 @@
+[ 30.12.2016 - 22:02:39 ]
+    (MSG) [2] in SMILExtract : openSMILE starting!
+[ 30.12.2016 - 22:02:39 ]
+    (MSG) [2] in SMILExtract : config file is: IS09_emotion.conf
+[ 30.12.2016 - 22:02:39 ]
+    (MSG) [2] in cComponentManager : successfully registered 95 component types.
+[ 30.12.2016 - 22:02:39 ]
+    (ERROR) [1] in configManager : ConfigType::findFieldH: referenced base field with name 'forcePeriod' not found!
+[ 30.12.2016 - 22:02:40 ]
+    (ERROR) [1] in configManager : ConfigType::findFieldH: referenced base field with name 'forcePeriod' not found!
