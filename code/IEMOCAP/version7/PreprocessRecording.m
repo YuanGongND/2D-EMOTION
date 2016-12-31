@@ -19,11 +19,11 @@ end
 
 %% Voice activity detection
 timeStampUtterance = VoiceActivityDetection( recording, sampleRate, setting );
-csvwrite( 'timeStampUtterance.csv', timeStampUtterance );
+csvwrite( '.\tempfile\timestamp\timeStampUtterance.csv', timeStampUtterance );
 
 %% Segmentation
-timeStampSeg = Segmentation( timeStampUtterance, setting );
-csvwrite( 'timeStampSeg.csv', timeStampSeg );
+timeStampSeg = Segmentation( recording, sampleRate, timeStampUtterance, setting );
+csvwrite( '.\tempfile\timestamp\timeStampSeg.csv', timeStampSeg );
 
 %% Feature extraction
 %FeatureExtraction( recording, timeStampSeg );

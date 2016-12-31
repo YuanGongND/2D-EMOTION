@@ -3,6 +3,7 @@ function [ output_args ] = FeatureExtraction( setting )
 
 dirRecording = dir( setting.recordingPath );
 %% the first two is not file 
+%% NOTICE, NOT SORTED BY NAME
 for fileIndex = 3 : length( dirRecording )
     
 end
