@@ -1,4 +1,5 @@
-function [  ] = PreprocessRecording( recordingName, setting )
+function [ timeStampUtterance, timeStampSeg, timeStampMapping ]...
+    = PreprocessRecording( recordingName, setting )
 % Preprocessing the recording includes voice activity detecttion ( removing 
 % silence), segmentation (cut into processing unit), extract acoustic
 % features. 
@@ -26,7 +27,8 @@ timeStampSeg = Segmentation( recording, sampleRate, timeStampUtterance, setting 
 csvwrite( '.\tempfile\timestamp\timeStampSeg.csv', timeStampSeg );
 
 %% Feature extraction
-%FeatureExtraction( recording, timeStampSeg );
+% keep record timeStamp of each segment 
+[ timeStampMapping ] = FeatureExtraction( setting );
 
 end
 

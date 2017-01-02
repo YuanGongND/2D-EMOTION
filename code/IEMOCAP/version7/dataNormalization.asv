@@ -1,0 +1,8 @@
+function [ normalizedData, mean, std ] = dataNormalization( originalData, mean, std )
+% for training data, input original data, do z-score and return data, mean
+% and std 
+% for test data, input original data , mean, std of traing data
+
+
+end
+

@@ -1,22 +1,41 @@
-function [ output_args ] = FeatureExtraction( setting )
+function [ timeStampMapping ] = FeatureExtraction( setting )
 % use openSmile tools to extract emotion related features
 
 dirRecording = dir( setting.recordingPath );
-% the first two is not file 
-% NOTICE, NOT SORTED BY NAME
+% the first two is not file, NOTICE, NOT SORTED BY NAME
+
+% delete old feature file, avoid overlap
+if ( exist( setting.featureFileName, 'file' ) )
+    delete( setting.featureFileName );
+end
+
+% keep record of the mapping from feature of each segment to corresponding
+% timeStamp
+timeStampMapping = [];
+
 for fileIndex = 3 : length( dirRecording )
-    recordingFileName = dirRecording( fileIndex ); 
+    recordingFile = dirRecording( fileIndex ); 
     % call openSmile extract the feature 
     % be cautious of space in the command 
-    system( ['SMILExtract_Release -C IS09_emotion.conf -I ', setting.recordingPath, recordingFileName, ' -O testFeature.csv' ] );
+    system( ...
+       ['SMILExtract_Release -C IS09_emotion.conf -I ',...
+        setting.recordingPath,...
+        '/',...
+        recordingFile.name,...
+        ' -O ',...
+        setting.featureFileName ] );
     
     % determine which utterance/segment the wav belongs to
-    recordingFileNameSplit = regexp( a, '_', 'split' );
+    recordingFileNameSplit = regexp( recordingFile.name, '_', 'split' );
     [ utteranceIndex, segmentIndex ] = deal( ...
         str2num( recordingFileNameSplit{ 1 } ),... 
-        str2num( recordingFileNameSplit{ 2 } ) )...
-     
-end
+        str2num( recordingFileNameSplit{ 2 } ) );...
+        
+    timeStampMapping = [ timeStampMapping; utteranceIndex, segmentIndex ];
+    
+end % end of processing all recording 
 
-end
+ConvertArffToCsv();
 
+end % end of function
+ 
