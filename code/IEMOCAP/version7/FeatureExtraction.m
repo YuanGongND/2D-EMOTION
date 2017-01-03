@@ -35,7 +35,7 @@ for fileIndex = 3 : length( dirRecording )
     
 end % end of processing all recording 
 
-ConvertArffToCsv();
+ConvertArffToCsv( setting );
 
 end % end of function
  

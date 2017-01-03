@@ -37,9 +37,8 @@ activationData = activationData( speakerIndex, : );
 valenceData = valenceData( speakerIndex, : );
 
 [ ~, mean, std ] = DataNormalization( activationData );
-normalizationFactor.mean = mean;
-normalizationFactor.std = std;
-save( 'model.mat', 'normalizationFactor' );
+NormalizationFactor.mean = mean;
+Normalizatio
 
 % matlab way to read text from excel
 [~,~,clabel] = xlsread( CATELABELPATH, 'A:A' );

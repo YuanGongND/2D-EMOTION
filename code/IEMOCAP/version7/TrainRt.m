@@ -13,11 +13,11 @@ labels = rawData( trainingIndex, 1);
 %% seperate and preprocess features from raw data
 rawfeatures = rawData( :, featureIndex );
 % Normalize features using zscore
-featuresNormalized = zscore( rawfeatures ); %normalization  %featuresNormalized=mapminmax(allFeatureSet')';
+featuresNormalized = DataNormalization( rawfeatures ); %normalization  %featuresNormalized=mapminmax(allFeatureSet')';
 % only use selected samples
 features = featuresNormalized( trainingIndex, : )
 
 %% train svm model
 model = fitrtree( features, labels );
-         
+
 end

@@ -7,10 +7,10 @@ function [ output_args ] = ConvertArffToCsv( setting, featureNum )
     
     % arff file has a feature title, but matlab xlsread will only read
     % numerical information
-    arffFile = xlsread();
+    arffFile = xlsread( setting.featureFileName );
     %% arff numberical information = csv information
     csvFile = arffFile;
-    csvwrite( setting.featureFileName, csvFile);
+    csvwrite( setting.featureFileName, csvFile );
     
 end
 
