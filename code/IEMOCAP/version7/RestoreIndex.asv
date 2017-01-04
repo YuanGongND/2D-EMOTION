@@ -1,0 +1,7 @@
+function [ restoredResult ] = RestoreIndex( timeStamp, originalResult )
+% restore the index to the sequence of segment/utterance
+
+
+
+end
+

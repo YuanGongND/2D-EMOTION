@@ -28,6 +28,15 @@ resultVale = TestRt( testdata,... observations*features, first column is label, 
                      setting.valenceFeatureIndex,...
                      normalizationFactor...
                      );
+                 
+% restore index, the data is not organized with sequence of
+% utterance/segment, restore this sequence
+
+resultActiRes = RestoreIndex( timeStamp, resultActi );
+resultValeRes = RestoreIndex( timeStamp, resultVale ); 
+
+csvwrite( setting.actiResultPath, resultActiRes );
+csvwrite( setting.valeResultPath, resultValeRes );
 
 end
 

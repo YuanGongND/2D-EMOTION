@@ -36,7 +36,7 @@ function [] = visualizationaudio(index,wholeResult,namepath,audiopath)
        step(writerObj,F,data);
        
     end
-    
+     
     release(writerObj);
 
 end
