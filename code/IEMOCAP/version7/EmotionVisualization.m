@@ -1,5 +1,5 @@
 function [ ] = EmotionVisualization( setting )
-% visualize the emotions
+% static visualize the emotions
 
 %% read recording
 [ recording, sampleRate ] = audioread( setting.recordingName );
@@ -27,8 +27,8 @@ for segmentIndex = 1 : size( timeStampSeg, 1 )
     segmentValence = valenceResult( segmentIndex, 1 );
     % use color to represent emotion, currently only use valence, will
     % update in future 
-    jetColor = jet;
-    colorCode = jetColor( floor( segmentValence / 5 *64 ), : );
+    emotionColor = jet;
+    colorCode = emotionColor( floor( segmentValence / 5 *64 ), : );
     rectangle('Position', [ segmentStart, 1.8, segmentLength, 0.2 ], 'FaceColor', colorCode );
     hold on;
 end % end of show color-coded segment block
