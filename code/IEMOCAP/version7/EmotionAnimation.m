@@ -18,6 +18,7 @@ recording = recording( :, 1 ) + recording( :, 2 );
 xAxis = 1 : size( recording );
 xAxis = xAxis / sampleRate; 
 
+set(gcf,'unit','centimeters','position',[10 5 50 50]);
 hrecording = subplot(2,1,1)
 plot( xAxis, recording );
 hold on;
@@ -63,11 +64,15 @@ for timeline = 0: 1/v.FrameRate: size( recording, 1 )/sampleRate
      end
      % add frame to the video
      F = getframe( hrecording );
-     writeVideo( v, F ); 
+     line( [timeline timeline],[-1 -0.95],'Color', 'r');
+     writeVideo( v, F );
      timeline
 end
 
-% release the result
 close(v);
+
+PlayVideo( setting );
+% release the video
+
 
 end 
