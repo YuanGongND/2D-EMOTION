@@ -2,6 +2,7 @@ function [  ] = EmotionAnimation( setting )
 % animate the emotions
 
 %% clean old figure
+close all;
 hold off;
 
 %% initialize the video
@@ -18,10 +19,14 @@ recording = recording( :, 1 ) + recording( :, 2 );
 xAxis = 1 : size( recording );
 xAxis = xAxis / sampleRate; 
 
-set(gcf,'unit','centimeters','position',[10 5 50 50]);
-hrecording = subplot(2,1,1)
+set(gcf,'unit','centimeters','position',[10 5 10 10]);
+hrecording = subplot(2,1,1);
 plot( xAxis, recording );
 hold on;
+hprediction = subplot(2,1,2);
+axis([0 5 0 5]);
+xlabel('valence');
+ylabel('activation');
 
 %% read prediction result 
 activationResult = csvread( setting.actiResult );
@@ -51,25 +56,37 @@ for timeline = 0: 1/v.FrameRate: size( recording, 1 )/sampleRate
          % convert to seconds
          xAxis = xAxis / sampleRate;
          % the valence prediction of this section
-         segmentValence = activationResult( segmentIndex, 1 );
+         segmentValence = valenceResult( segmentIndex, 1 );
+         segmentActivation = activationResult( segmentIndex, 1 );
          % use color to represent emotion (use smooting to avoid overflow)
          colorCode = emotionColorMap( 64 - ceil( segmentValence / 5 *63 ), : );
-         % plot
+         % plot the audio
+         subplot( 2, 1, 1);
          plot( xAxis, recordingPart, 'Color', colorCode );
+         hold on
+         % plot the 2-D emotion
+         subplot(2, 1, 2 );
+         hold off;
+         scatter( segmentValence, segmentActivation, 20, 'r', 'filled' );
+         axis([0 5 0 5]); 
+         xlabel('valence');
+         ylabel('activation');
          hold on
          % consider next segment if not to end
          if segmentIndex < size( timeStampSeg, 1 )
              segmentIndex = segmentIndex + 1;
-         end  
+         end
      end
      % add frame to the video
-     F = getframe( hrecording );
-     line( [timeline timeline],[-1 -0.95],'Color', 'r');
+     F = getframe( gcf );
+     subplot( 2, 1, 1);
+     scatter( timeline, -1, 20, 'r', 'filled' );
      writeVideo( v, F );
      timeline
 end
 
 close(v);
+%close all;
 
 PlayVideo( setting );
 % release the video

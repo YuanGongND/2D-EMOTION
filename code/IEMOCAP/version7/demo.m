@@ -22,7 +22,7 @@ function varargout = demo(varargin)
 
 % Edit the above text to modify the response to help demo
 
-% Last Modified by GUIDE v2.5 27-Dec-2016 03:28:26
+% Last Modified by GUIDE v2.5 05-Jan-2017 20:19:10
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -57,6 +57,11 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
+% make default settings
+global isRecording;
+isRecording = 0;
+global setting;
+DefaultSetting;
 
 % UIWAIT makes demo wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -131,3 +136,268 @@ function add_pushbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to add_pushbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in RecordingFromFile.
+function RecordingFromFile_Callback(hObject, eventdata, handles)
+% hObject    handle to RecordingFromFile (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in RecordingRecordNow.
+function RecordingRecordNow_Callback(hObject, eventdata, handles)
+% hObject    handle to RecordingRecordNow (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global isRecording;
+global recorder;
+global setting;
+if isRecording == 0
+    recorder = audiorecorder( 16000, 16, 2);
+    record( recorder );
+    isRecording = 1 
+    set(hObject,'String','Stop');
+    setting.recordingName = 'sampleRecorder.wav';
+else
+    stop(recorder);
+    y = getaudiodata(recorder);
+    audiowrite('sampleRecorder.wav',y, 16000);
+    isRecording = 0
+    set(hObject,'String','Record Now');
+end
+
+
+
+function frameLength_Callback(hObject, eventdata, handles)
+% hObject    handle to frameLength (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of frameLength as text
+%        str2double(get(hObject,'String')) returns contents of frameLength as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function frameLength_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to frameLength (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function maxSilence_Callback(hObject, eventdata, handles)
+% hObject    handle to maxSilence (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of maxSilence as text
+%        str2double(get(hObject,'String')) returns contents of maxSilence as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function maxSilence_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to maxSilence (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function minLength_Callback(hObject, eventdata, handles)
+% hObject    handle to minLength (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of minLength as text
+%        str2double(get(hObject,'String')) returns contents of minLength as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function minLength_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to minLength (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in start.
+function start_Callback(hObject, eventdata, handles)
+% hObject    handle to start (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global setting;
+
+setting.frameLength = str2num( get( handles.frameLength, 'String' ) );
+
+setting.maxSilence = str2num( get( handles.maxSilence, 'String' ) );
+
+setting.minLength = str2num( get( handles.minLength, 'String' ) );
+
+setting.segmentLength = str2num( get( handles.segmentLength, 'String' ) );
+
+activationFeatureIndex = get( handles.activationFeatureIndex, 'String' );
+valenceFeatureIndex = get( handles.valenceFeatureIndex, 'String' );
+
+setting.predictionAlgorithm = get( handles.algorithm, 'String' );
+
+setting.modelPath = get( handles.modelPath, 'String' );
+
+
+CloseLoopTest;
+
+
+
+function modelPath_Callback(hObject, eventdata, handles)
+% hObject    handle to modelPath (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of modelPath as text
+%        str2double(get(hObject,'String')) returns contents of modelPath as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function modelPath_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to modelPath (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function algorithm_Callback(hObject, eventdata, handles)
+% hObject    handle to algorithm (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of algorithm as text
+%        str2double(get(hObject,'String')) returns contents of algorithm as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function algorithm_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to algorithm (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function valenceFeatureIndex_Callback(hObject, eventdata, handles)
+% hObject    handle to valenceFeatureIndex (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of valenceFeatureIndex as text
+%        str2double(get(hObject,'String')) returns contents of valenceFeatureIndex as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function valenceFeatureIndex_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to valenceFeatureIndex (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function activationFeatureIndex_Callback(hObject, eventdata, handles)
+% hObject    handle to activationFeatureIndex (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of activationFeatureIndex as text
+%        str2double(get(hObject,'String')) returns contents of activationFeatureIndex as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function activationFeatureIndex_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to activationFeatureIndex (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function segmentLength_Callback(hObject, eventdata, handles)
+% hObject    handle to segmentLength (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of segmentLength as text
+%        str2double(get(hObject,'String')) returns contents of segmentLength as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function segmentLength_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to segmentLength (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function recordingPath_Callback(hObject, eventdata, handles)
+% hObject    handle to recordingPath (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global setting;
+setting.recordingName = get( hObject, 'String');
+
+% Hints: get(hObject,'String') returns contents of recordingPath as text
+%        str2double(get(hObject,'String')) returns contents of recordingPath as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function recordingPath_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to recordingPath (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

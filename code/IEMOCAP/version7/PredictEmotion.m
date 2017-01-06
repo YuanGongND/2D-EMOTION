@@ -3,7 +3,7 @@ function [ resultActi, resultVale ] = PredictEmotion( setting )
 %   Detailed explanation goes here
 
 % load model(acti/vale model,svm/rt model, normalization factor)
-load( 'model.mat' );
+load( setting.modelPath );
 % load data (whole feature set)
 originalFeature = xlsread( setting.featureFileName );
 % developping, will be true label in next version
@@ -28,15 +28,9 @@ resultVale = TestRt( testdata,... observations*features, first column is label, 
                      setting.valenceFeatureIndex,...
                      normalizationFactor...
                      );
-                 
-% restore index, the data is not organized with sequence of
-% utterance/segment, restore this sequence
 
-resultActiRes = RestoreIndex( timeStamp, resultActi );
-resultValeRes = RestoreIndex( timeStamp, resultVale ); 
-
-csvwrite( setting.actiResultPath, resultActiRes );
-csvwrite( setting.valeResultPath, resultValeRes );
+csvwrite( setting.actiResult, resultActi );
+csvwrite( setting.valeResult, resultVale );
 
 end
 

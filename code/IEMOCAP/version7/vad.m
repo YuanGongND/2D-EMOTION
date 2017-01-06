@@ -5,7 +5,7 @@ recording = double( recording );
 recording = recording / max( abs( recording ) );
 
 % Constant
-FrameLen = setting.frameLen;  %% 1280/16000=0.08s
+FrameLen = setting.frameLength;  %% 1280/16000=0.08s
 FrameInc = FrameLen / 2;
 
 amp1 = 10;
@@ -13,8 +13,8 @@ amp2 = 2;
 zcr1 = 10;
 zcr2 = 5;
 
-maxsilence = setting.maxsilence;  % 10*0.08 = 0.8s 
-minlen  = setting.minlength;    % 25*0.08ms = 2s
+maxsilence = setting.maxSilence;  % 10*0.08 = 0.8s 
+minlen  = setting.minLength;    % 25*0.08ms = 2s
 status  = 0;
 count   = 0;
 silence = 0;

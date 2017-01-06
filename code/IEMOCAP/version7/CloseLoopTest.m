@@ -1,7 +1,7 @@
 % scaffold for building the whole system
 
 %% deploy default settings
-DefaultSetting;
+%DefaultSetting;
 
 %% preprocess the original recording
 [ timeStampUtterance, timeStampSeg, timeStampMapping ] = PreprocessRecording( );
@@ -10,5 +10,5 @@ DefaultSetting;
 [ resultActi, resultVale ] = PredictEmotion( setting );
 
 %% visualization
-EmotionVisualization( setting );
+EmotionAnimation( setting );
 
