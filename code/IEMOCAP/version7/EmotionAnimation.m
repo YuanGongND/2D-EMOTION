@@ -86,7 +86,7 @@ for timeline = 0: 1/v.FrameRate: size( recording, 1 )/sampleRate
 end
 
 close(v);
-%close all;
+close all;
 
 PlayVideo( setting );
 % release the video
