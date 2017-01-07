@@ -23,7 +23,7 @@ for i = 1 : size( timeStampUtterance )
     for j = 1 : segmentNum
         timeStampSegment = [ timeStampSegment; startSegment, startSegment + segmentLength, i , 0];
         
-        audiowrite( [ './tempfile/wav/' num2str( i ), '_', num2str( j ) '_.wav' ], ... temp wav path
+        audiowrite( [ setting.recordingPath, '/', num2str( i ), '_', num2str( j ) '_.wav' ], ... temp wav path
                       recording( startSegment : ( startSegment + segmentLength ) ), ... wav segment
                       sampleRate ); ... segment
                   
@@ -34,7 +34,7 @@ for i = 1 : size( timeStampUtterance )
     if( timeStampUtterance( i , 2 ) - startSegment > segmentLength*0.5 ) 
     timeStampSegment = [ timeStampSegment; startSegment, timeStampUtterance( i , 2 ), i , 0];
     
-    audiowrite( [ './tempfile/wav/' num2str( i ), '_', num2str( j+1 ) '_.wav' ], ... temp wav path
+    audiowrite( [ setting.recordingPath, '/' ,num2str( i ), '_', num2str( j+1 ) '_.wav' ], ... temp wav path
               recording( startSegment : timeStampUtterance( i , 2 ) ), ... wav segment
               sampleRate ); ... segment
     end % end of process last segment of utterance

@@ -253,7 +253,7 @@ setting.maxSilence = str2num( get( handles.maxSilence, 'String' ) );
 
 setting.minLength = str2num( get( handles.minLength, 'String' ) );
 
-setting.segmentLength = str2num( get( handles.segmentLength, 'String' ) )*16000;
+setting.segmentLength = str2num( get( handles.segmentLength, 'String' ) );
 
 activationFeatureIndex = get( handles.activationFeatureIndex, 'String' );
 valenceFeatureIndex = get( handles.valenceFeatureIndex, 'String' );

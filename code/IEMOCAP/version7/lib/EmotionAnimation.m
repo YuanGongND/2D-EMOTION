@@ -2,11 +2,11 @@ function [  ] = EmotionAnimation( setting )
 % animate the emotions
 
 %% clean old figure
-close all;
+%close all;
 hold off;
 
 %% initialize the video
-v = VideoWriter( 'EmotionAnimation.mp4', 'MPEG-4');
+v = VideoWriter( setting.sampleAnimation, 'MPEG-4');
 % 1/frameRate should smaller than segment
 v.FrameRate = 10;
 open( v );
@@ -33,7 +33,7 @@ activationResult = csvread( setting.actiResult );
 valenceResult = csvread( setting.valeResult );
 
 %% read timeStamp
-timeStampSeg = csvread( setting.timeStampSeg );
+timeStampSeg = csvread( setting.timeStampSegment );
 % start/end time of segment
 timeStampStartInPoint = timeStampSeg( :, 1 );
 timeStampEndInPoint = timeStampSeg( :, 2 );
@@ -86,7 +86,7 @@ for timeline = 0: 1/v.FrameRate: size( recording, 1 )/sampleRate
 end
 
 close(v);
-close all;
+%close(gcf);
 
 PlayVideo( setting );
 % release the video

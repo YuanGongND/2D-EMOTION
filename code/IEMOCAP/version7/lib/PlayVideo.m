@@ -2,6 +2,7 @@ function [  ] = PlayVideo( setting )
 % play audio and video together 
 
 %% read video
+%close all;
 
 vidObj = VideoReader( setting.sampleAnimation );
 vidHeight = vidObj.Height;

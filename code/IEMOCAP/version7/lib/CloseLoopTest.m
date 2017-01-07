@@ -4,7 +4,7 @@
 %DefaultSetting;
 
 %% preprocess the original recording
-[ timeStampUtterance, timeStampSeg, timeStampMapping ] = PreprocessRecording( );
+[ timeStampUtterance, timeStampSeg, timeStampMapping ] = PreprocessRecording( setting );
 
 %% make prediction 
 [ resultActi, resultVale ] = PredictEmotion( setting );
